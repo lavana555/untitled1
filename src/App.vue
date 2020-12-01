@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <CounterVuex />
+<!--    <CounterVuex />-->
     <AddRecipe :onAdd="addRecipe"/>
 
     <div class="columns">
@@ -13,6 +13,16 @@
           v-on:remove="removeRecipe"
       />
     </div>
+
+    <div v-for="post in all" :key="post.id">
+      <div class="post">
+      <p>{{post.title}}</p>
+      <p>{{post.body}}</p>
+      <p>{{post.id}}</p>
+      </div>
+      </div>
+
+
   </div>
 </template>
 
@@ -20,12 +30,13 @@
 import AddRecipe from '@/components/AddRecipe'
 import RecipeDetail from '@/components/RecipeDetail'
 import RecipeList from '@/components/RecipeList'
-import CounterVuex from "@/components/CounterVuex";
+//import CounterVuex from "@/components/CounterVuex";
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'app',
   components: {
-    CounterVuex,
+  //  CounterVuex,
     AddRecipe,
     RecipeList,
     RecipeDetail
@@ -33,7 +44,8 @@ export default {
   data() {
     return {
       recipies: [],
-      current: null
+      current: null,
+      // posts:[]
     }
   },
   methods: {
@@ -55,7 +67,27 @@ export default {
     }
 
   },
-  computed: {}
+ // async mounted() {
+ //
+ //   const response= await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
+ //    const posts= await  response.json()
+ //   // eslint-disable-next-line no-debugger
+ //   debugger
+ //   this.posts=posts
+ //   console.log(posts)
+ //  },
+
+  // computed: {
+  //   allPosts(){
+  //     // eslint-disable-next-line no-debugger
+  //     debugger
+  //   return   this.$store.getters.all
+  //   }
+  // }
+  async mounted() {
+    await this.$store.dispatch('getposts')
+  },
+  computed:mapGetters(['all'])
 
 }
 </script>
@@ -99,7 +131,20 @@ a:hover {
 .columns {
   display: flex;
 }
-
+.post {
+  margin: 0 auto;
+  margin-bottom: 15px;
+  padding: 5px 10px;
+  width: 550px;
+  border: 1px solid #99f3f5;
+  font-size: 17px;
+  background-color: #eadc9a;
+  border-radius: 20px;
+}
+.post:hover{
+  transition-duration: 2s;
+  transform: scale(0.7);
+}
 .detail, .list {
   width: 50%;
   border: 1px solid #eee;
