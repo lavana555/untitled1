@@ -1,28 +1,133 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <CounterVuex />
+    <AddRecipe :onAdd="addRecipe"/>
+
+    <div class="columns">
+      <RecipeList
+          v-on:currentRecipe="currentRecipe"
+          v-bind:recipies="recipies"
+      />
+      <RecipeDetail
+          v-bind:current="current"
+          v-on:remove="removeRecipe"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AddRecipe from '@/components/AddRecipe'
+import RecipeDetail from '@/components/RecipeDetail'
+import RecipeList from '@/components/RecipeList'
+import CounterVuex from "@/components/CounterVuex";
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
-    HelloWorld
-  }
+    CounterVuex,
+    AddRecipe,
+    RecipeList,
+    RecipeDetail
+  },
+  data() {
+    return {
+      recipies: [],
+      current: null
+    }
+  },
+  methods: {
+
+    addRecipe(recipe) {
+      // eslint-disable-next-line no-debugger
+      //ebugger
+      this.recipies.push(recipe)
+      console.log(recipe)
+    },
+    currentRecipe(id) {
+      // eslint-disable-next-line no-debugger
+      // debugger
+      this.current = this.recipies.find((r) => r.id === id)
+    },
+    removeRecipe(id) {
+      this.recipies = this.recipies.filter((r) => r.id !== id)
+      this.current = null
+    }
+
+  },
+  computed: {}
+
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #222;
+}
+
+a {
+  text-decoration: none;
+  color: darkblue;
+  transition: .3s all ease;
+}
+
+.center {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+a:hover {
+  cursor: pointer;
+  opacity: .7;
+  text-decoration: underline;
+}
+
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+.columns {
+  display: flex;
+}
+
+.detail, .list {
+  width: 50%;
+  border: 1px solid #eee;
+}
+
+.list {
+  border-right: 0;
+}
+
+.btn {
+  border-radius: 5px;
+  background: darkblue;
+  color: #fff;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  background-color: #eee;
+  color: black;
+  cursor: not-allowed;
+}
+
+.btn.remove {
+  background: darkred;
+}
+
+.btn.secondary {
+  background: grey;
 }
 </style>
