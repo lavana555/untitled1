@@ -1,45 +1,61 @@
 <template>
   <div class="container">
-<!--    <CounterVuex />-->
-    <AddRecipe :onAdd="addRecipe"/>
-
-    <div class="columns">
-      <RecipeList
-          v-on:currentRecipe="currentRecipe"
-          v-bind:recipies="recipies"
-      />
-      <RecipeDetail
-          v-bind:current="current"
-          v-on:remove="removeRecipe"
-      />
-    </div>
-
-    <div v-for="post in all" :key="post.id">
-      <div class="post">
-      <p>{{post.title}}</p>
-      <p>{{post.body}}</p>
-      <p>{{post.id}}</p>
-      </div>
-      </div>
 
 
+<!--    &lt;!&ndash;    <CounterVuex />&ndash;&gt;-->
+<!--    <AddRecipe :onAdd="addRecipe"/>-->
+
+<!--    <div class="columns">-->
+<!--      <RecipeList-->
+<!--          v-on:currentRecipe="currentRecipe"-->
+<!--          v-bind:recipies="recipies"-->
+<!--      />-->
+<!--      <RecipeDetail-->
+<!--          v-bind:current="current"-->
+<!--          v-on:remove="removeRecipe"-->
+<!--      />-->
+<!--    </div>-->
+
+
+
+<!--    <div v-for="post in all" :key="post.id">-->
+<!--      <div class="post">-->
+<!--        <p>{{ post.title }}</p>-->
+<!--        <p>{{ post.body }}</p>-->
+<!--        <p>{{ post.id }}</p>-->
+<!--      </div>-->
+<!--   -->
+
+
+<!--    </div>-->
+<!--    <Todos />-->
+<!--    <Dialog />-->
+<!--<Pagination />-->
+
+   <router-view />
   </div>
 </template>
 
 <script>
-import AddRecipe from '@/components/AddRecipe'
-import RecipeDetail from '@/components/RecipeDetail'
-import RecipeList from '@/components/RecipeList'
-//import CounterVuex from "@/components/CounterVuex";
+//import AddRecipe from '@/components/AddRecipe'
+//import RecipeDetail from '@/components/RecipeDetail'
+//import RecipeList from '@/components/RecipeList'
+
 import {mapGetters} from 'vuex'
+//import Pagination from "@/components/Pagination";
+//import Dialog from "@/components/Dialog";
+//import Todos from "@/components/Todos";
 
 export default {
   name: 'app',
   components: {
-  //  CounterVuex,
-    AddRecipe,
-    RecipeList,
-    RecipeDetail
+   // Dialog,
+    //Todos,
+    //Pagination,
+   // AddRecipe,
+    //RecipeList,
+    //RecipeDetail,
+
   },
   data() {
     return {
@@ -67,15 +83,15 @@ export default {
     }
 
   },
- // async mounted() {
- //
- //   const response= await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
- //    const posts= await  response.json()
- //   // eslint-disable-next-line no-debugger
- //   debugger
- //   this.posts=posts
- //   console.log(posts)
- //  },
+  // async mounted() {
+  //
+  //   const response= await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
+  //    const posts= await  response.json()
+  //   // eslint-disable-next-line no-debugger
+  //   debugger
+  //   this.posts=posts
+  //   console.log(posts)
+  //  },
 
   // computed: {
   //   allPosts(){
@@ -87,7 +103,7 @@ export default {
   async mounted() {
     await this.$store.dispatch('getposts')
   },
-  computed:mapGetters(['all'])
+  computed: mapGetters(['all'])
 
 }
 </script>
@@ -131,6 +147,7 @@ a:hover {
 .columns {
   display: flex;
 }
+
 .post {
   margin: 0 auto;
   margin-bottom: 15px;
@@ -141,10 +158,12 @@ a:hover {
   background-color: #eadc9a;
   border-radius: 20px;
 }
-.post:hover{
+
+.post:hover {
   transition-duration: 2s;
   transform: scale(0.7);
 }
+
 .detail, .list {
   width: 50%;
   border: 1px solid #eee;
