@@ -1,70 +1,120 @@
 <template>
-  <form class="form" @submit.prevent="submit">
-    <h1>Добавить рецепт</h1>
-    <div v-if="visible">
-      <div class="input">
-        <input type="text" placeholder="Название рецепта" v-model="title">
-      </div>
+<!--  <div class="form" @submit.prevent="submit">-->
+<!--    <h1>Добавить рецепт</h1>-->
+<!--    <div v-if="visible">-->
+<!--      <div class="input">-->
+<!--        <input type="text" placeholder="Название рецепта" v-model="form.title">-->
+<!--      </div>-->
 
-      <div class="input">
-        <input type="text" placeholder="Описание рецепта" v-model="description">
-      </div>
-    </div>
+<!--      <div class="input">-->
+<!--        <input type="text" placeholder="Описание рецепта" v-model="form.description">-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="buttons">
-      <button class="btn" type="submit" v-bind:disabled="!valid">Создать</button>
-      <button class="btn secondary" type="button" @click="toggle">
-        {{ visible ? 'убрать' : 'показать' }}
-        форму
-      </button>
-    </div>
+<!--    <div class="buttons">-->
 
-    <div v-if="type ==='a'">a</div>
-    <div v-if="type==='b'">b</div>
-    <div v-if="type==='c'">c</div>
 
-  </form>
+<!--        <div class="text-xs-center">-->
+<!--          <v-btn fab dark-->
+<!--                 color="indigo"-->
+<!--                 type="submit" v-bind:disabled="!valid"-->
+<!--          >-->
+<!--            <v-icon dark>add</v-icon>-->
+<!--          </v-btn>-->
+<!--        </div>-->
+
+<!--&lt;!&ndash;      <button class="btn" type="submit" v-bind:disabled="!valid">Создать</button>&ndash;&gt;-->
+<!--      <button class="btn secondary" type="button" @click="toggle">-->
+<!--        {{ visible ? 'убрать' : 'показать' }}-->
+<!--        форму-->
+<!--      </button>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<div>
+  <Form />
+</div>
+<!--  <Form />-->
+<!--  <div>addRecipe</div>-->
 </template>
 
 <script>
-
+import {ref, reactive, computed} from '@vue/composition-api'
+import {useToggle} from "@/components/composition/toggle";
+import Form from "@/components/Form";
+//import Form from "@/components/Form";
 
 export default {
+  components: {Form},
+  //components: {Form},
   props: {
     onAdd: {
       type: Function,
       required: true
     }
   },
-  data() {
-    return {
-      title: '',
-      description: '',
-      visible: true
-
-    }
-  },
-  methods: {
-    toggle() {
-      this.visible = !this.visible
-    },
-    submit() {
-      // eslint-disable-next-line no-unused-vars
+  // data() {
+  //   debugger
+  //   console.log(this.props)
+  //   return {
+  //     title: '',
+  //     description: '',
+  //     visible: true
+  //
+  //   }
+  // },
+  setup(props) {
+    // let visible = ref(true)
+    const form = reactive({
+          title: '',
+          description: ''
+        }
+    )
+    // const toggle = () => {
+    //   visible.value = !visible.value
+    // }
+    const submit = () => {
       const recipe = {
-        title: this.title.trim(),
-        description: this.description.trim(),
+        title: form.title.trim(),
+        description: form.description.trim(),
         id: Date.now().toString()
       }
-      this.title = this.description = ''
-      this.onAdd(recipe)
+      form.title = form.description = ''
+      // debugger
+      props.onAdd(recipe)
     }
+    const valid = computed(() => {
 
-  },
-  computed: {
-    valid() {
-      return this.title.trim() && this.description.trim()
+      return form.title.trim() && form.description.trim()
+    })
+    return {
+      //visible, toggle,
+      submit, form, valid,
+      ...useToggle()
     }
-  }
+  },
+//   methods: {
+//     toggle() {
+//       this.visible = !this.visible
+//     },
+//     submit() {
+//       // eslint-disable-next-line no-unused-vars
+// debugger
+//       const recipe = {
+//         title: this.title.trim(),
+//         description: this.description.trim(),
+//         id: Date.now().toString()
+//       }
+//       this.title = this.description = ''
+//       this.onAdd(recipe)
+//     }
+//
+//   },
+//   computed: {
+//     valid() {
+//       return this.title.trim() && this.description.trim()
+//     }
+//   }
 }
 </script>
 

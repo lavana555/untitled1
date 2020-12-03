@@ -28,14 +28,25 @@ import Recipe from "@/components/Recipe";
 export default {
   components: {Recipe},
 props:['recipies'],
-  methods:{
-    currentRecipe(id){
-      // eslint-disable-next-line no-debugger
-      //debugger
-      this.$emit('currentRecipe',id)
-    }
-  },
+  // methods:{
+  //   currentRecipe(id){
+  //     // eslint-disable-next-line no-debugger
+  //     //debugger
+  //     this.$emit('currentRecipe',id)
+  //   }
+  // },
+setup(props,{attrs,slots,emit}){
 
+    const  currentRecipe=(id)=>{
+    // eslint-disable-next-line no-debugger
+    //debugger
+    emit('currentRecipe',id)
+  }
+
+    return{
+      currentRecipe,
+    }
+}
 }
 
 </script>

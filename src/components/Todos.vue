@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="todosContainer">
     <h2>hello todos</h2>
   <div v-for="post in posts" :key="post.id">
     <p>{{post.title}}</p>
@@ -42,5 +42,8 @@ export default {
 </script>
 
 <style scoped>
+.todosContainer{
+ width: 300px;
+}
 
 </style>

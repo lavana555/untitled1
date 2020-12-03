@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Home from "@/components/Home";
 import Todos from "@/components/Todos";
 import Router from "vue-router";
+import RecipeInner from "@/components/RecipeInner";
 
 
 
@@ -18,6 +19,10 @@ export default new Router({
         {
             path:'/todos',
             component:Todos
+        },
+        {
+            path:'/recepiesinner',
+            component: RecipeInner
         }
     ]
 })

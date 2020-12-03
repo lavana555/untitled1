@@ -1,7 +1,15 @@
 <template>
   <div class="container">
-
-
+    <v-tabs >
+      <v-tab
+          v-for="n in path"
+          :key="n"
+          :to="`/${n}`"
+      >
+         {{ n }}
+      </v-tab>
+    </v-tabs>
+    <router-view />
 <!--    &lt;!&ndash;    <CounterVuex />&ndash;&gt;-->
 <!--    <AddRecipe :onAdd="addRecipe"/>-->
 
@@ -32,7 +40,7 @@
 <!--    <Dialog />-->
 <!--<Pagination />-->
 
-   <router-view />
+
   </div>
 </template>
 
@@ -48,6 +56,11 @@ import {mapGetters} from 'vuex'
 
 export default {
   name: 'app',
+  data(){
+    return{
+      path:['todos','recepiesinner']
+    }
+  },
   components: {
    // Dialog,
     //Todos,
@@ -57,32 +70,32 @@ export default {
     //RecipeDetail,
 
   },
-  data() {
-    return {
-      recipies: [],
-      current: null,
-      // posts:[]
-    }
-  },
-  methods: {
-
-    addRecipe(recipe) {
-      // eslint-disable-next-line no-debugger
-      //ebugger
-      this.recipies.push(recipe)
-      console.log(recipe)
-    },
-    currentRecipe(id) {
-      // eslint-disable-next-line no-debugger
-      // debugger
-      this.current = this.recipies.find((r) => r.id === id)
-    },
-    removeRecipe(id) {
-      this.recipies = this.recipies.filter((r) => r.id !== id)
-      this.current = null
-    }
-
-  },
+  // data() {
+  //   return {
+  //     recipies: [],
+  //     current: null,
+  //     // posts:[]
+  //   }
+  // },
+  // methods: {
+  //
+  //   addRecipe(recipe) {
+  //     // eslint-disable-next-line no-debugger
+  //     //ebugger
+  //     this.recipies.push(recipe)
+  //     console.log(recipe)
+  //   },
+  //   currentRecipe(id) {
+  //     // eslint-disable-next-line no-debugger
+  //     // debugger
+  //     this.current = this.recipies.find((r) => r.id === id)
+  //   },
+  //   removeRecipe(id) {
+  //     this.recipies = this.recipies.filter((r) => r.id !== id)
+  //     this.current = null
+  //   }
+  //
+  // },
   // async mounted() {
   //
   //   const response= await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
@@ -142,6 +155,7 @@ a:hover {
   max-width: 1000px;
   margin: 0 auto;
   height: 100vh;
+
 }
 
 .columns {
