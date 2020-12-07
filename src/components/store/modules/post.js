@@ -29,7 +29,9 @@ export default {
     actions: {
         async getposts(ctx) {
             const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
+           // debugger
             const posts = await response.json()
+           // debugger
             ctx.commit("upDatePost",posts)
         }
     },

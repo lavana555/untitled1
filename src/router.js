@@ -4,12 +4,13 @@ import Home from "@/components/Home";
 import Todos from "@/components/Todos";
 import Router from "vue-router";
 import RecipeInner from "@/components/RecipeInner";
+import store from "@/vuex/store";
 
 
 
 Vue.use(Router)
 
-export default new Router({
+ let router=new Router({
     mode:'history',
     routes:[
         {
@@ -18,11 +19,22 @@ export default new Router({
         },
         {
             path:'/todos',
-            component:Todos
+            component:Todos,
+            props:true
         },
         {
             path:'/recepiesinner',
+            name:'recepiesinner',
             component: RecipeInner
         }
-    ]
+    ],
+
+
 })
+router.beforeEach((to, from, next) => {
+
+    if (!store.state.isAuth && to.name==='recepiesinner') alert('non auth')
+    else next()
+})
+
+export default router

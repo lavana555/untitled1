@@ -9,7 +9,7 @@
          {{ n }}
       </v-tab>
     </v-tabs>
-    <router-view />
+         <router-view />
 <!--    &lt;!&ndash;    <CounterVuex />&ndash;&gt;-->
 <!--    <AddRecipe :onAdd="addRecipe"/>-->
 
@@ -106,17 +106,14 @@ export default {
   //   console.log(posts)
   //  },
 
-  // computed: {
-  //   allPosts(){
-  //     // eslint-disable-next-line no-debugger
-  //     debugger
-  //   return   this.$store.getters.all
-  //   }
-  // }
-  async mounted() {
-    await this.$store.dispatch('getposts')
-  },
-  computed: mapGetters(['all'])
+
+  // async mounted() {
+  //   ////debugger
+  // const response=await this.$store.dispatch('getposts')
+  //   console.log(response)
+  // },
+//  computed: mapGetters(['all'])
+
 
 }
 </script>
